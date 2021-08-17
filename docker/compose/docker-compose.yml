@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  waterdrop:
+    image: waterdrop/php-apache:latest
+    networks:
+      default:
+        aliases:
+          - waterdrop
+    ports:
+      - '80:80'
+    environment:
+      XDEBUG_CONFIG: 'remote_host=$HOST_IP'
+      PHP_IDE_CONFIG: 'serverName=local.waterdrop.com'
+    links:
+      - mysql
+    volumes:
+      - ../..:/var/www/waterdrop
+
+  mysql:
+    image: mysql
+    networks:
+      default:
+        aliases:
+          - waterdrop-database
+    command: >
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --innodb_flush_log_at_trx_commit=0
+      --default-authentication-plugin=mysql_native_password
+      --sql-mode="ALLOW_INVALID_DATES"
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_DATABASE: 'waterdrop'
+      MYSQL_USER: 'root'
+      MYSQL_PASSWORD: 'CXyAmA<XT3>DSPK'
+      MYSQL_ROOT_PASSWORD: 'CXyAmA<XT3>DSPK'
+
