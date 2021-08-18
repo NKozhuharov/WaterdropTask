@@ -4,11 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Http\Models\Dog;
 use App\Jobs\AddDog;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class DogController extends Controller
 {
-    public function add(Request $request)
+    /**
+     * Asynchronously creates a Dog object
+     *
+     * @param Request $request
+     * @return Dog
+     * @throws ValidationException
+     */
+    public function add(Request $request): Dog
     {
         $this->validate(
             $request,
@@ -31,10 +40,13 @@ class DogController extends Controller
         return $dog;
     }
 
+    /**
+     * List all dogs from the database
+     *
+     * @return Dog[]|Collection
+     */
     public function list()
     {
-        $databaseDogs = Dog::all();
-
-        return $databaseDogs;
+        return Dog::all();
     }
 }
