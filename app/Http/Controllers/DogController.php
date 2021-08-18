@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Models\Dog;
+use App\Jobs\AddDog;
 use Illuminate\Http\Request;
 
 class DogController extends Controller
@@ -22,7 +23,10 @@ class DogController extends Controller
         $dog->{Dog::F_NAME} = $request->{Dog::F_NAME};
         $dog->{Dog::F_AGE} = $request->{Dog::F_AGE};
         $dog->{Dog::F_WEIGHT} = $request->{Dog::F_WEIGHT};
-        $dog->save();
+
+        $addDogJob = new AddDog($dog);
+
+        dispatch($addDogJob)->onQueue('dogs');
 
         return $dog;
     }
