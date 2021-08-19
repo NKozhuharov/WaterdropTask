@@ -53,7 +53,7 @@ docker build --tag waterdrop/php-apache:latest .
   php artisan db:seed
   ```
 
-* In order to be make the inserting of **Dogs** asynchronous, a Laravel Queue is used, run the following command inside the container to enable it:
+* In order to make the inserting of **Dogs** asynchronous, a Laravel Queue is used, run the following command inside the container to enable it:
 
   ```sh
   php artisan queue:work --queue=dogs
